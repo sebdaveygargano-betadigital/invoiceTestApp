@@ -1,0 +1,33 @@
+{
+  "xsappname": "invoiceapptwo-xsuaa",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "Read only"
+    },
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Full access including create"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "User",
+      "description": "User role for invoice operations",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "Administrator role with full access",
+      "scope-references": [
+        "$XSAPPNAME.User",
+        "$XSAPPNAME.Admin"
+      ]
+    }
+  ],
+  "authorities-inheritance": false
+}

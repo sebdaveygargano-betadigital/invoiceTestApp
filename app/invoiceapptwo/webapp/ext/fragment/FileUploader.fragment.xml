@@ -1,0 +1,40 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:unified="sap.ui.unified">
+
+    <Dialog
+        id="fileUploadDialog"
+        title="Upload Invoice"
+        stretchOnPhone="true"
+        class="sapUiPopupWithPadding">
+
+        <content>
+            <!-- Just a simple FileUploader, no VBox needed -->
+            <unified:FileUploader
+                id="invoiceFileUploader"
+                name="file"
+                placeholder="Select a (fake) PDF file..."
+                width="100%"
+                fileType="json"
+                change=".onFileSelected"
+                sameFilenameAllowed="false"
+                maximumFileSize="20"/>
+        </content>
+
+        <beginButton>
+            <Button id="_IDGenButton"
+                text="Cancel"
+                press=".onCancelPressed"/>
+        </beginButton>
+
+        <endButton>
+            <Button
+                id="attachButton"
+                text="Attach"
+                enabled="false"
+                press=".onAttachPressed"/>
+        </endButton>
+
+    </Dialog>
+</core:FragmentDefinition>
