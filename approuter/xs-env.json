@@ -1,0 +1,48 @@
+{
+    "VCAP_SERVICES": {
+        "xsuaa": [
+            {
+                "name": "invoiceapptwo-auth",
+                "label": "xsuaa",
+                "tags": [
+                    "xsuaa"
+                ],
+                "credentials": {
+                    "xsappname": "invoiceapptwo-local",
+                    "clientid": "<your-xsuaa-clientid>",
+                    "clientsecret": "<your-xsuaa-clientsecret>",
+                    "url": "https://<your-subdomain>.authentication.<region>.hana.ondemand.com",
+                    "uaadomain": "<region>.hana.ondemand.com",
+                    "tenantid": "<tenant-id>",
+                    "tenantmode": "dedicated"
+                }
+            }
+        ],
+        "destination": [
+            {
+                "name": "invoiceapptwo-destination",
+                "label": "destination",
+                "tags": [
+                    "destination"
+                ],
+                "credentials": {
+                    "clientid": "<your-destination-clientid>",
+                    "clientsecret": "<your-destination-clientsecret>",
+                    "uri": "https://destination-configuration.<region>.hana.ondemand.com",
+                    "url": "https://destination-configuration.<region>.hana.ondemand.com"
+                }
+            }
+        ]
+    },
+    "destinations": [
+        {
+            "name": "srv-api",
+            "url": "http://localhost:4004",
+            "forwardAuthToken": true
+        },
+        {
+            "name": "ui5",
+            "url": "https://ui5.sap.com"
+        }
+    ]
+}

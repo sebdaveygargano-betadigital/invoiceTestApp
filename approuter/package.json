@@ -1,0 +1,14 @@
+{
+    "name": "invoiceapptwo-approuter",
+    "description": "Approuter for InvoiceAppTwo CAP application",
+    "version": "1.0.0",
+    "dependencies": {
+        "@sap/approuter": "^15"
+    },
+    "scripts": {
+        "start": "node node_modules/@sap/approuter/approuter.js"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}

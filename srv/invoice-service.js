@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-export default (srv) => {
+module.exports = (srv) => {
 
     const { Invoices, InvoiceItems } = srv.entities;
 

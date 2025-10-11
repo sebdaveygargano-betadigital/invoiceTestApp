@@ -38,3 +38,6 @@ gen/db/.env
 # auto generated wildcard
 db/.env
 .env
+.cdsrc.json
+
+dist/

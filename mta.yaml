@@ -3,105 +3,125 @@ ID: invoiceapptwo
 description: A simple CAP project.
 version: 1.0.0
 modules:
-- name: invoiceapptwo-srv
-  type: nodejs
-  path: gen/srv
-  requires:
+  ## srv definition
+  - name: invoiceapptwo-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: invoiceapptwo-auth
+      - name: invoiceapptwo-db
+      - name: invoiceapptwo-destination
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+      instances: 1
+    build-parameters:
+      builder: npm-ci
+  #deployer
+  - name: invoiceapptwo-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: invoiceapptwo-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: invoiceapptwo-app-deployer
+    type: com.sap.application.content
+    path: gen
+    requires:
+      - name: invoiceapptwo-auth
+      - name: srv-api
+      - name: invoiceapptwo-html5-repo-host
+        parameters:
+          config:
+            HTML5Runtime_enabled: true
+          content-target: true
+      - name: invoiceapptwo-destination
+    build-parameters:
+      build-result: app/
+      requires:
+        - artifacts:
+            - invoiceapptwo.zip
+          name: invoiceapptwo
+          target-path: app/
+  - name: invoiceapptwo-approuter
+    type: approuter.nodejs
+    path: approuter
+    requires:
+      - name: invoiceapptwo-auth
+      - name: invoiceapptwo-destination
+      - name: invoiceapptwo-html5-repo-runtime
+      - name: srv-api
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: invoiceapptwo
+    type: html5
+    path: app/invoiceapptwo
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+resources:
+  - name: invoiceapptwo-html5-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
   - name: invoiceapptwo-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      config:
+        tenant-mode: dedicated
+        xsappname: invoiceapptwo-${org}-${space}
+      service: xsuaa
+      service-plan: application
   - name: invoiceapptwo-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
   - name: invoiceapptwo-destination
-  - name: invoiceapptwo-logging
-  provides:
-  - name: srv-api
-    properties:
-      srv-url: ${default-url}
-  parameters:
-    buildpack: nodejs_buildpack
-    instances: 1
-  build-parameters:
-    builder: npm-ci
-- name: invoiceapptwo-db-deployer
-  type: hdb
-  path: gen/db
-  requires:
-  - name: invoiceapptwo-db
-  parameters:
-    buildpack: nodejs_buildpack
-- name: invoiceapptwo-app-deployer
-  type: com.sap.application.content
-  path: gen
-  requires:
-  - name: invoiceapptwo-auth
-  - name: srv-api
-  - name: invoiceapptwo-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: srv-api
     parameters:
       config:
-        HTML5Runtime_enabled: true
-      content-target: true
-  build-parameters:
-    build-result: app/
-    requires:
-    - artifacts:
-      - invoiceapptwo.zip
-      name: invoiceapptwo
-      target-path: app/
-- name: invoiceapptwo
-  type: html5
-  path: app/invoiceapptwo
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-resources:
-- name: invoiceapptwo-auth
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      tenant-mode: dedicated
-      xsappname: invoiceapptwo-${org}-${space}
-    path: ./xs-security.json
-    service: xsuaa
-    service-plan: application
-- name: invoiceapptwo-db
-  type: com.sap.xs.hdi-container
-  parameters:
-    service: hana
-    service-plan: hdi-shared
-- name: invoiceapptwo-destination
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      HTML5Runtime_enabled: false
-      init_data:
-        instance:
-          destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
-    service: destination
-    service-plan: lite
-- name: invoiceapptwo-html5-repo-host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-plan: app-host
-- name: invoiceapptwo-logging
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: application-logs
-    service-plan: standard
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+              - Name: ui5
+                Type: HTTP
+                ProxyType: Internet
+                Authentication: NoAuthentication
+                URL: https://ui5.sap.com
+              - Name: srv-api
+                Type: HTTP
+                ProxyType: Internet
+                Authentication: NoAuthentication
+                ForwardAuthToken: true
+                URL: ~{srv-api/srv-url}
+            existing_destinations_policy: update
+      service: destination
+      service-plan: lite
+  - name: invoiceapptwo-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-  - builder: custom
-    commands:
-    - npm ci
-    - npx cds build --production
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
