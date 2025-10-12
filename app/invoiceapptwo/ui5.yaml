@@ -26,3 +26,19 @@ server:
       configuration:
         flp:
           theme: sap_fiori_3_dark
+builder:
+  customTasks:
+    - name: webide-extension-task-updateManifestJson
+      beforeTask: generateManifestBundle
+      configuration:
+        appFolder: webapp
+        destDir: dist
+    - name: webide-extension-task-resources
+      afterTask: generateVersionInfo
+      configuration:
+        nameSpace: invoiceapptwo
+    - name: webide-extension-task-copyFile
+      afterTask: webide-extension-task-resources
+      configuration:
+        srcFile: "/xs-app.json"
+        destFile: "/xs-app.json"

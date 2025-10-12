@@ -26,11 +26,6 @@ annotate service.Invoices with @(
             Value : buyerName,
             Label : '{i18n>Buyer}',
         },
-        {
-            $Type : 'UI.DataFieldForAction',
-            Action : 'InvoiceService.EntityContainer/createInvoiceFromFile',
-            Label : 'Upload Invoices',
-        },
     ],
     UI.HeaderInfo : {
         TypeName : 'Invoice',

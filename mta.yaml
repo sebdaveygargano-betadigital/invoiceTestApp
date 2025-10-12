@@ -2,15 +2,14 @@ _schema-version: 3.3.0
 ID: invoiceapptwo
 description: A simple CAP project.
 version: 1.0.0
+
 modules:
-  ## srv definition
   - name: invoiceapptwo-srv
     type: nodejs
     path: gen/srv
     requires:
       - name: invoiceapptwo-auth
       - name: invoiceapptwo-db
-      - name: invoiceapptwo-destination
     provides:
       - name: srv-api
         properties:
@@ -20,7 +19,7 @@ modules:
       instances: 1
     build-parameters:
       builder: npm-ci
-  #deployer
+
   - name: invoiceapptwo-db-deployer
     type: hdb
     path: gen/db
@@ -28,35 +27,7 @@ modules:
       - name: invoiceapptwo-db
     parameters:
       buildpack: nodejs_buildpack
-  - name: invoiceapptwo-app-deployer
-    type: com.sap.application.content
-    path: gen
-    requires:
-      - name: invoiceapptwo-auth
-      - name: srv-api
-      - name: invoiceapptwo-html5-repo-host
-        parameters:
-          config:
-            HTML5Runtime_enabled: true
-          content-target: true
-      - name: invoiceapptwo-destination
-    build-parameters:
-      build-result: app/
-      requires:
-        - artifacts:
-            - invoiceapptwo.zip
-          name: invoiceapptwo
-          target-path: app/
-  - name: invoiceapptwo-approuter
-    type: approuter.nodejs
-    path: approuter
-    requires:
-      - name: invoiceapptwo-auth
-      - name: invoiceapptwo-destination
-      - name: invoiceapptwo-html5-repo-runtime
-      - name: srv-api
-    parameters:
-      buildpack: nodejs_buildpack
+
   - name: invoiceapptwo
     type: html5
     path: app/invoiceapptwo
@@ -67,12 +38,43 @@ modules:
         - npm install
         - npm run build:cf
       supported-platforms: []
-resources:
-  - name: invoiceapptwo-html5-repo-runtime
-    type: org.cloudfoundry.managed-service
+
+  - name: invoiceapptwo-approuter
+    type: approuter.nodejs
+    path: approuter
+    requires:
+      - name: invoiceapptwo-auth
+      - name: invoiceapptwo-destination
+      - name: invoiceapptwo-html5-repo-runtime
+      - name: srv-api
     parameters:
-      service: html5-apps-repo
-      service-plan: app-runtime
+      buildpack: nodejs_buildpack
+
+  - name: invoiceapptwo-app-deployer
+    type: com.sap.application.content
+    path: gen
+    requires:
+      - name: invoiceapptwo-auth
+      - name: srv-api
+      - name: invoiceapptwo-html5-repo-host
+        parameters:
+          content-target: true
+      - name: invoiceapptwo-destination
+    build-parameters:
+      build-result: app/
+      requires:
+        - artifacts:
+            - invoiceapptwo.zip
+          name: invoiceapptwo
+          target-path: app/
+
+resources:
+  - name: invoiceapptwo-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+
   - name: invoiceapptwo-auth
     type: org.cloudfoundry.managed-service
     parameters:
@@ -82,20 +84,31 @@ resources:
         xsappname: invoiceapptwo-${org}-${space}
       service: xsuaa
       service-plan: application
-  - name: invoiceapptwo-db
-    type: com.sap.xs.hdi-container
+
+  - name: invoiceapptwo-html5-repo-host
+    type: org.cloudfoundry.managed-service
     parameters:
-      service: hana
-      service-plan: hdi-shared
+      service: html5-apps-repo
+      service-plan: app-host
+
+  - name: invoiceapptwo-html5-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+
   - name: invoiceapptwo-destination
     type: org.cloudfoundry.managed-service
     requires:
       - name: srv-api
     parameters:
+      service: destination
+      service-plan: lite
       config:
         HTML5Runtime_enabled: false
         init_data:
           instance:
+            existing_destinations_policy: update
             destinations:
               - Name: ui5
                 Type: HTTP
@@ -108,17 +121,11 @@ resources:
                 Authentication: NoAuthentication
                 ForwardAuthToken: true
                 URL: ~{srv-api/srv-url}
-            existing_destinations_policy: update
-      service: destination
-      service-plan: lite
-  - name: invoiceapptwo-html5-repo-host
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-plan: app-host
+
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
+
 build-parameters:
   before-all:
     - builder: custom

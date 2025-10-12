@@ -150,27 +150,12 @@
                     "type": "ResponsiveTable"
                   },
                   "actions": {
-                    "attachFile": {
-                      "press": ".extension.invoiceapptwo.ext.controller.FileUpload.attach",
-                      "visible": true,
-                      "enabled": true,
-                      "requiresSelection": false,
-                      "text": "Attach",
-                      "position": {
-                        "placement": "Before",
-                        "anchor": "DataFieldForAction::InvoiceService.EntityContainer::createInvoiceFromFile"
-                      }
-                    },
                     "attachPdfFiles": {
                       "press": "invoiceapptwo.ext.controller.FileUploader.attachPDF",
                       "visible": true,
                       "enabled": true,
                       "requiresSelection": false,
-                      "text": "AttachInvoice",
-                      "position": {
-                        "placement": "Before",
-                        "anchor": "DataFieldForAction::InvoiceService.EntityContainer::createInvoiceFromFile"
-                      }
+                      "text": "{i18n>attachInvoice}"
                     }
                   }
                 }
