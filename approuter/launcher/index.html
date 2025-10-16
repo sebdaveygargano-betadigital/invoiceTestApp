@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice Applications</title>
+    <style>
+        body {
+            font-family: "72", Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #0a6ed1;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            background-color: #0a6ed1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0854a0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Select a Frontend Application</h1>
+    <div class="button-container">
+        <button onclick="window.location.href='/invoiceapptwo/'">Invoice App Two</button>
+        <button onclick="window.location.href='/invoiceappthree/'">Invoice App Three</button>
+    </div>
+</body>
+
+</html>

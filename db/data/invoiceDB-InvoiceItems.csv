@@ -1,0 +1,11 @@
+parentInvoice_documentNumber,lineNumber,description,quantity,unit,unitPrice,netAmount,taxRate,taxCode,purchaseOrderNumber,purchaseOrderItem,materialNumber
+INV-1001,1,Office Chairs Set of 5,2,SET,1000,2000,10,GST,PO-7891,Item-1,MAT-CHAIR-01
+INV-1001,2,Desks,5,EA,500,2500,10,GST,PO-7891,Item-2,MAT-DESK-02
+INV-1002,1,Printer Paper A4 500 Sheets,20,PK,80,1600,10,GST,PO-7892,Item-1,MAT-PAPER-03
+INV-1002,2,Ink Cartridges,10,EA,160,1600,10,GST,PO-7892,Item-2,MAT-INK-04
+INV-1003,1,Laptops Model X200,3,EA,2000,6000,10,GST,PO-7893,Item-1,MAT-LAPTOP-05
+INV-1003,2,Laptop Bags,2,EA,100,200,10,GST,PO-7893,Item-2,MAT-BAG-06
+INV-1004,1,Fruit Boxes Mixed,10,BOX,500,5000,10,GST,PO-7894,Item-1,MAT-FRUIT-07
+INV-1004,2,Vegetable Boxes,8,BOX,400,3200,10,GST,PO-7894,Item-2,MAT-VEG-08
+INV-1004,3,Dairy Products Pack,1,SET,700,700,10,GST,PO-7894,Item-3,MAT-DAIRY-09
+INV-1004,4,Beverage Crates,1,CR,1000,1000,10,GST,PO-7894,Item-4,MAT-DRINK-10

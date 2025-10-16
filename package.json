@@ -13,18 +13,14 @@
   "devDependencies": {
     "@cap-js/sqlite": "^2",
     "@sap/cds-dk": "^9",
-    "@sap/cds": "^9",
     "cds-plugin-ui5": "^0.13.0",
     "rimraf": "^5.0.5",
-    "mbt": "^1.2.29",
-    "@sap/hana-client": "^2",
-    "@sap/xssec": "^4",
-    "@sap/xsenv": "^4"
+    "mbt": "^1.2.29"
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-invoiceapptwo": "cds watch --open invoiceapptwo/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "undeploy": "cf undeploy invoiceapptwo --delete-services --delete-service-keys --delete-service-brokers",
+    "watch-invoiceapptwo": "cds watch --open invoiceapp/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy invoiceapp --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
@@ -71,8 +67,7 @@
       "kind": "hana"
     },
     "destinations": true,
-    "html5-repo": true,
-    "application-logging": true
+    "html5-repo": true
   },
   "workspaces": [
     "app/*"

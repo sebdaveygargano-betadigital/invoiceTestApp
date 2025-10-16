@@ -56,9 +56,7 @@ sap.ui.define([
                 const parsedData = JSON.parse(text);
                 console.log("Parsed DOX-style JSON:", parsedData);
 
-                // --- Call your backend service ---
-                // Adjust this path depending on how your CAP service is exposed
-                // Example: /invoice-service/createInvoiceFromFile
+                // Call service action
                 const response = await fetch("/invoices/createInvoiceFromFile", {
                     method: "POST",
                     headers: {

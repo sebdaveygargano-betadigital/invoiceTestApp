@@ -1,0 +1,5 @@
+documentNumber,invoiceDate,postingDate,dueDate,supplierName,supplierTaxID,supplierAddress,buyerName,buyerAddress,purchaseOrderNo,currency,netAmount,taxAmount,grossAmount,paymentTerms,bankAccount
+INV-1001,2025-10-01T00:00:00Z,2025-10-02T00:00:00Z,2025-11-01T00:00:00Z,Acme Supplies Pty Ltd,ACM123456,12 Market St Sydney,ABC Industries,45 Industrial Way Melbourne,PO-7891,AUD,4500,450,4950,Payment within 30 days,1234567890
+INV-1002,2025-09-15T00:00:00Z,2025-09-16T00:00:00Z,2025-10-15T00:00:00Z,Global Paper Co,GPC987654,25 Paper Rd Brisbane,Office Essentials Ltd,19 Queen St Perth,PO-7892,AUD,3200,320,3520,Net 30,2345678901
+INV-1003,2025-08-20T00:00:00Z,2025-08-21T00:00:00Z,2025-09-20T00:00:00Z,TechGear Imports,TGI112233,88 Silicon Ave Adelaide,Digital Dynamics,22 Green Park Canberra,PO-7893,USD,6200,620,6820,Due on receipt,3456789012
+INV-1004,2025-10-05T00:00:00Z,2025-10-06T00:00:00Z,2025-11-05T00:00:00Z,FreshFoods Wholesale,FFW998877,56 Harvest Rd Hobart,SuperMart Retail,77 Bayview Blvd Darwin,PO-7894,AUD,8900,890,9790,Payment due in 30 days,4567890123

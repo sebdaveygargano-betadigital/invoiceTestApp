@@ -2,7 +2,7 @@ using invoiceDB as db from '../db/schema';
 
 service InvoiceService @(path: '/invoices') {
 
-    @requires: [
+    /*@requires: [
         'User',
         'Admin'
     ]
@@ -22,7 +22,7 @@ service InvoiceService @(path: '/invoices') {
             ],
             to   : ['Admin']
         }
-    ]
+    ]*/
     entity Invoices     as
         projection on db.Invoices {
             @title documentNumber,
@@ -38,27 +38,27 @@ service InvoiceService @(path: '/invoices') {
             true as isOverdue        : Boolean, *
         };
 
-    @requires: [
-        'User',
-        'Admin'
-    ]
-    @restrict: [
-        {
-            grant: [
-                'READ',
-                'UPDATE',
-                'DELETE'
-            ],
-            to   : [
-                'User',
-                'Admin'
-            ]
-        },
-        {
-            grant: ['CREATE'],
-            to   : ['Admin']
-        }
-    ]
+    /*    @requires: [
+            'User',
+            'Admin'
+        ]
+        @restrict: [
+            {
+                grant: [
+                    'READ',
+                    'UPDATE',
+                    'DELETE'
+                ],
+                to   : [
+                    'User',
+                    'Admin'
+                ]
+            },
+            {
+                grant: ['CREATE'],
+                to   : ['Admin']
+            }
+        ]*/
     entity InvoiceItems as
         projection on db.InvoiceItems {
             @title lineNumber,

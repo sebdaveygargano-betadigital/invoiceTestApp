@@ -1,19 +1,15 @@
 _schema-version: 3.3.0
-ID: invoiceapp
-description: Invoice CAP Project with multiple frontends
+ID: invoiceapptwo
+description: A simple CAP project.
 version: 1.0.0
 
 modules:
-  # --- Backend (CAP service) ---
-  - name: invoiceapp-srv
+  - name: invoiceapptwo-srv
     type: nodejs
     path: gen/srv
     requires:
-      - name: invoiceapp-auth
-      - name: invoiceapp-db
-      - name: docai-service
-        parameters:
-          service-key: true
+      - name: invoiceapptwo-auth
+      - name: invoiceapptwo-db
     provides:
       - name: srv-api
         properties:
@@ -24,16 +20,14 @@ modules:
     build-parameters:
       builder: npm-ci
 
-  # --- DB deployer ---
-  - name: invoiceapp-db-deployer
+  - name: invoiceapptwo-db-deployer
     type: hdb
     path: gen/db
     requires:
-      - name: invoiceapp-db
+      - name: invoiceapptwo-db
     parameters:
       buildpack: nodejs_buildpack
 
-  # --- Frontend: invoiceapptwo ---
   - name: invoiceapptwo
     type: html5
     path: app/invoiceapptwo
@@ -45,30 +39,27 @@ modules:
         - npm run build:cf
       supported-platforms: []
 
-  # --- Approuter (shared for all UIs) ---
-  - name: invoiceapp-approuter
+  - name: invoiceapptwo-approuter
     type: approuter.nodejs
     path: approuter
     requires:
-      - name: invoiceapp-auth
-      - name: invoiceapp-destination
-      - name: invoiceapp-html5-repo-runtime
+      - name: invoiceapptwo-auth
+      - name: invoiceapptwo-destination
+      - name: invoiceapptwo-html5-repo-runtime
       - name: srv-api
     parameters:
       buildpack: nodejs_buildpack
-      memory: 256M
 
-  # --- Content Deployer (uploads HTML5 apps to repo) ---
-  - name: invoiceapp-app-deployer
+  - name: invoiceapptwo-app-deployer
     type: com.sap.application.content
     path: gen
     requires:
-      - name: invoiceapp-auth
+      - name: invoiceapptwo-auth
       - name: srv-api
-      - name: invoiceapp-html5-repo-host
+      - name: invoiceapptwo-html5-repo-host
         parameters:
           content-target: true
-      - name: invoiceapp-destination
+      - name: invoiceapptwo-destination
     build-parameters:
       build-result: app/
       requires:
@@ -78,46 +69,35 @@ modules:
           target-path: app/
 
 resources:
-  # --- Shared HDI container ---
-  - name: invoiceapp-db
+  - name: invoiceapptwo-db
     type: com.sap.xs.hdi-container
     parameters:
       service: hana
       service-plan: hdi-shared
 
-  # --- Shared XSUAA service ---
-  - name: invoiceapp-auth
+  - name: invoiceapptwo-auth
     type: org.cloudfoundry.managed-service
     parameters:
       path: ./xs-security.json
       config:
         tenant-mode: dedicated
-        xsappname: invoiceapp-${org}-${space}
+        xsappname: invoiceapptwo-${org}-${space}
       service: xsuaa
       service-plan: application
 
-  # --- DOCAI --- (not working)
-  - name: docai-service
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: document-information-extraction-trial
-      service-plan: blocks_of_100
-
-  # --- Shared HTML5 repo services ---
-  - name: invoiceapp-html5-repo-runtime
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-plan: app-runtime
-
-  - name: invoiceapp-html5-repo-host
+  - name: invoiceapptwo-html5-repo-host
     type: org.cloudfoundry.managed-service
     parameters:
       service: html5-apps-repo
       service-plan: app-host
 
-  # --- Shared Destination service ---
-  - name: invoiceapp-destination
+  - name: invoiceapptwo-html5-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+
+  - name: invoiceapptwo-destination
     type: org.cloudfoundry.managed-service
     requires:
       - name: srv-api
@@ -125,7 +105,7 @@ resources:
       service: destination
       service-plan: lite
       config:
-        HTML5Runtime_enabled: true
+        HTML5Runtime_enabled: false
         init_data:
           instance:
             existing_destinations_policy: update
