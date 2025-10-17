@@ -14,9 +14,9 @@
             <unified:FileUploader
                 id="invoiceFileUploader"
                 name="file"
-                placeholder="Select a (fake) PDF file..."
+                placeholder="Select a PDF file..."
                 width="100%"
-                fileType="json"
+                fileType="pdf"
                 change=".onFileSelected"
                 sameFilenameAllowed="false"
                 maximumFileSize="20"/>

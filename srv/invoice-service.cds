@@ -67,5 +67,7 @@ service InvoiceService @(path: '/invoices') {
 
 
     @requires: 'Admin'
-    action createInvoiceFromFile(file: LargeBinary, name: String) returns Invoices
+    action createInvoiceFromFile(file: LargeBinary, name: String)    returns Invoices;
+
+    action createInvoiceFromPDFFile(file: LargeBinary, name: String) returns Invoices;
 }

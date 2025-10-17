@@ -1,22 +1,56 @@
 {
-    "requires": {
-        "auth": {
-            "kind": "mocked",
-            "users": {
-                "alice": {
-                    "password": "alice123",
-                    "roles": [
-                        "User",
-                        "Admin"
-                    ]
-                },
-                "bob": {
-                    "password": "bob123",
-                    "roles": [
-                        "Admin"
-                    ]
-                }
-            }
+  "requires": {
+    "auth": {
+      "kind": "mocked",
+      "users": {
+        "alice": {
+          "password": "alice123",
+          "roles": ["User", "Admin"]
+        },
+        "bob": {
+          "password": "bob123",
+          "roles": ["Admin"]
         }
+      }
+    },
+
+    "sap-document-information-extraction": {
+      "kind": "rest",
+      "credentials": {
+        "dwcreuseservice": true,
+        "endpoints": {
+          "backend": {
+            "timeout": 30000,
+            "url": "https://aiservices-dox.cfapps.ap10.hana.ondemand.com"
+          }
+        },
+        "html5-apps-repo": {
+          "app_host_id": "24bbbbee-0e89-429a-8938-50e596df0624"
+        },
+        "saasregistryenabled": true,
+        "sap.cloud.service": "com.sap.apps.documentinformationextraction",
+        "swagger": "/document-information-extraction/v1/",
+        "tenantuiurl": "https://development.ap10.doc.cloud.sap",
+        "uaa": {
+          "apiurl": "https://api.authentication.ap10.hana.ondemand.com",
+          "clientid": "sb-fcc0ab39-11d5-45c3-bcf1-8e4423a0fc5f!b76906|dox-xsuaa-std-production!b1845",
+          "clientsecret": "ab41aaef-c984-478b-a33a-115700df9709$96UeajZ08BB5EOcbiR3NZXQEUPi_nV3yHFFjSlxngy0=",
+          "credential-type": "binding-secret",
+          "identityzone": "development",
+          "identityzoneid": "0f615152-c343-4a73-9f24-5f0729dc8c19",
+          "sburl": "https://internal-xsuaa.authentication.ap10.hana.ondemand.com",
+          "serviceInstanceId": "fcc0ab39-11d5-45c3-bcf1-8e4423a0fc5f",
+          "subaccountid": "0f615152-c343-4a73-9f24-5f0729dc8c19",
+          "tenantid": "0f615152-c343-4a73-9f24-5f0729dc8c19",
+          "tenantmode": "shared",
+          "uaadomain": "authentication.ap10.hana.ondemand.com",
+          "url": "https://development.authentication.ap10.hana.ondemand.com",
+          "verificationkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlJMwYagEKgYxC/c99C8V\nUSqpqtqmxOvfQibpbt3R/sdHmlSQi3CA97qbYwUmPM+WEHh6isWbRjHs21notLJn\nAYTgfnMxH8jwCwEME059d0gMx4dZt9lEbH5bJb8oNSyldKYZWz+2LlwTYpHCf/Ry\ncJaOdB1Uo41Dyi0aRHmbH/tULLTUyZVdZ3FJSwgrP4RDJKE0/vkJuHjyakTRfVEL\nPc+F6wXlcad16CmnnVGS8mDjZnOFRDWhWgVYa1dOtY06rRvxIDuQAzgsPLJvjs1N\nznEpBG8Hge5+F9kJIXeuVZTqN9b2yl8Ij2T1/Xdr9Iic4Ij5vUTZDpTu5sMrGF+M\nMQIDAQAB\n-----END PUBLIC KEY-----",
+          "xsappname": "fcc0ab39-11d5-45c3-bcf1-8e4423a0fc5f!b76906|dox-xsuaa-std-production!b1845",
+          "zoneid": "0f615152-c343-4a73-9f24-5f0729dc8c19"
+        },
+        "url": "https://aiservices-dox.cfapps.ap10.hana.ondemand.com"
+      }
     }
+  }
 }

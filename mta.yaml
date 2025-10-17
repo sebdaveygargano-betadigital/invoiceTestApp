@@ -11,7 +11,7 @@ modules:
     requires:
       - name: invoiceapp-auth
       - name: invoiceapp-db
-      - name: docai-service
+      - name: seb-test-docai
         parameters:
           service-key: true
     provides:
@@ -97,7 +97,7 @@ resources:
       service-plan: application
 
   # --- DOCAI --- (not working)
-  - name: docai-service
+  - name: seb-test-docai
     type: org.cloudfoundry.managed-service
     parameters:
       service: document-information-extraction-trial
